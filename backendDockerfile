@@ -1,0 +1,25 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y curl
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# install editor
+RUN apt-get install -y vim
+
+# install express and create backend
+RUN npm install -g express-generator 
+RUN express react-backend
+WORKDIR react-backend
+RUN npm install
+
+# react-backend/routes will be mounted with server dir
+
+# start
+EXPOSE 3001
+CMD PORT=3001 node bin/www

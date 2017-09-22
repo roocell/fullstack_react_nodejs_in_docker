@@ -1,0 +1,33 @@
+FROM ubuntu:latest
+
+# this must be run using the new "docker for win/mac" 
+# not docker toolbox (which doesn't support file system event notifications)
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y curl
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# install editor
+RUN apt-get install -y vim
+
+# install tools and create frontend
+RUN npm install -g create-react-app
+RUN create-react-app frontend
+
+WORKDIR /frontend
+
+# configure proxy (let's frontend talk to backend)
+# this assumes the backend docker container will be names "api"
+RUN sed '$i,\n"proxy": "http://api:3001"' package.json >> package.json.new
+RUN cp package.json.new package.json
+
+# client/src dir will be mounted 
+
+# run the frontend                   
+EXPOSE 3000
+CMD npm start  
