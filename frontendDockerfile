@@ -21,6 +21,16 @@ RUN create-react-app frontend
 
 WORKDIR /frontend
 
+# eject CRA so we can modify the webpack config
+RUN echo 'y' | npm run eject -y
+
+# modify webpack config
+# for editing outside docker container
+#RUN sed -i '$ d' config/webpack.config.dev.js
+#RUN echo "watchOptions: {\npoll: 100\n},\n};" >> config/webpack.config.dev.js
+RUN sed -i '/watchOptions/a    poll: 100,' config/webpackDevServer.config.js
+
+
 # configure proxy (let's frontend talk to backend)
 # this assumes the backend docker container will be names "api"
 RUN sed '$i,\n"proxy": "http://api:3001"' package.json >> package.json.new
