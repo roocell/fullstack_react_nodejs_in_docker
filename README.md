@@ -1,6 +1,7 @@
 # fullstack_react_nodejs_in_docker
 client and server side code running in separate containers. host mounted code.
 
+
 backend and frontend dockerized
 1. install "docker for mac" or "docker for windows" (requires win10pro)
 2. build containers
@@ -12,7 +13,7 @@ docker build -f frontendDockerfile -t roocell/frontend .
 
 3. run containers
 ```
-docker run -it --name api -v $(PWD)/server:/react-backend/routes -d roocell/backend
+docker run -it --name api -v $(PWD)/api/routes:/backend/routes -p 3001:3001 -d roocell/backend
 docker run -it --name client -v $(PWD)/client:/frontend/src --link api -p 3000:3000 -d roocell/frontend
 ```
 

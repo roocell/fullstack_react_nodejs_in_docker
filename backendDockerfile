@@ -12,14 +12,38 @@ RUN apt-get install -y nodejs
 # install editor
 RUN apt-get install -y vim
 
+# install webpack
+RUN npm install webpack -g
+#RUN npm install --save webpack-hot-middleware
+#RUN npm install --save webpack-dev-middleware
+
 # install express and create backend
 RUN npm install -g express-generator 
-RUN express react-backend
-WORKDIR react-backend
+RUN express backend
+WORKDIR backend
+
+# install webpack
+RUN npm install webpack
+#RUN npm install --save webpack-hot-middleware
+#RUN npm install --save webpack-dev-middleware
+RUN npm install -g nodemon
+
+# COPY in server root files
+COPY api/webpack.config.js /backend
+COPY api/app.js /backend
+COPY api/package.json /backend
+
+# install backend app
 RUN npm install
 
-# react-backend/routes will be mounted with server dir
+# copy in webpack config
+COPY api/webpack.config.js webpack.config.js
+COPY api/backendInit.sh . 
+RUN chmod 777 /backend/backendInit.sh
+
+# backend/routes will be mounted with server dir
+# with the run command
 
 # start
 EXPOSE 3001
-CMD PORT=3001 node bin/www
+CMD /backend/backendInit.sh
