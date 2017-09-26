@@ -8,6 +8,12 @@ class App extends Component {
 
   componentDidMount() {
     fetch('/users')
+      //.then(function(res) {
+      //  return res.json();
+      //}).then(function(json) {
+      //  console.log(json);
+        //this.setState({ users });
+      //});
       .then(res => res.json())
       .then(users => this.setState({ users }));
     fetch('/markers')
@@ -27,6 +33,7 @@ class App extends Component {
         {this.state.markers.map(marker =>
           <div key={marker.id}>{marker.lat}</div>
         )}
+
       </div>
     );
   }

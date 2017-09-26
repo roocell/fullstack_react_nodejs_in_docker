@@ -6,8 +6,8 @@ router.get('/', function(req, res, next) {
 	// Comment out this line:
   //res.send('respond with a resource');
 
-  var key = 'Orientation Sensor';
-  o[key] = []; // empty Array, which you can push() values into
+  var key = 'markers';
+  o = []; // empty Array, which you can push() values into
 
 
   var data = {
@@ -18,8 +18,8 @@ router.get('/', function(req, res, next) {
     id: '1450632410296',
     lat: '78.15431'
   };
-  o[key].push(data);
-  o[key].push(data2);
+  o.push(data);
+  o.push(data2);
 
   res.json(JSON.stringify(o));
 });
