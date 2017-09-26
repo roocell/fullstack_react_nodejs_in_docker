@@ -7,21 +7,27 @@ router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
 
   var key = 'markers';
-  o = []; // empty Array, which you can push() values into
-
+  var a = [{"id":"000000", "lat":"0.000"}]; // use array to push into 
+  var o = {}; // object
 
   var data = {
-    id: '1450632410296',
+    id: 'R44444444446',
     lat: '76.36731'
   };
   var data2 = {
-    id: '1450632410296',
-    lat: '78.15431'
+    id: '1544445510296',
+    lat: '99.15431'
   };
-  o.push(data);
-  o.push(data2);
+  a.push(data);
+  a.push(data2);
 
-  res.json(JSON.stringify(o));
+
+  res.json(a);
+  // the client end doesn't work with stringify
+  // which produces a bunch of quotes and escape sequences
+  //res.json(Object.assign({}, a));
+
 });
 
-module.exports = router;var o = {} // empty Object
+module.exports = router;
+var o = {} // empty Object

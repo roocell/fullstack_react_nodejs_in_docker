@@ -26,5 +26,10 @@ module.exports = {
                              { raw: true, entryOnly: false })
   ],
 */
-  devtool: 'sourcemap'
+  devtool: 'sourcemap',
+  /* use legacy watch options so docker write on host works */
+  watchOptions: {
+      poll: 100
+  }
+
 }
