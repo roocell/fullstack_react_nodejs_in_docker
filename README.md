@@ -24,5 +24,17 @@ docker-machine ls
 
 5. edit "client/App.js" for client side
 
-6. edit "server/*" for server side routes
+6. edit "api/*" for server side routes
+
+NOTE:
+- to remove containers
+```
+docker rm -f client
+docker rm -f api
+```
+- to connect to containers
+```
+docker exec -it client bash
+docker exec -it api bash
+```
 
