@@ -7,19 +7,28 @@ router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
 
   var key = 'markers';
-  var a = [{"id":"000000", "lat":"0.000"}]; // use array to push into 
+  var a = []; // use array to push into 
   var o = {}; // object
 
   var data = {
-    id: 'R44444444446',
-    lat: '76.36731'
+    id: 'marker1',
+    lat: '45.3427596',
+    lon: '-75.7690188'
   };
   var data2 = {
-    id: '1544445510296',
-    lat: '99.15431'
+    id: 'marker2',
+    lat: '45.3426088',
+    lon: '-75.7677689'
   };
+  var data3 = {
+    id: 'marker3',
+    lat: '45.3418019',
+    lon: '-75.7677314'
+  };
+
   a.push(data);
   a.push(data2);
+  a.push(data3);
 
 
   res.json(a);

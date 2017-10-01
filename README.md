@@ -37,4 +37,7 @@ docker rm -f api
 docker exec -it client bash
 docker exec -it api bash
 ```
-
+- if you run into problems running 'docker ps' then be sure to add the following to your .bash_profile
+```
+eval "$(docker-machine env default)"
+```

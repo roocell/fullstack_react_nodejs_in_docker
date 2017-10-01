@@ -34,6 +34,7 @@ RUN sed -i '/watchOptions/a    poll: 100,' config/webpackDevServer.config.js
 # configure proxy (let's frontend talk to backend)
 # this assumes the backend docker container will be names "api"
 RUN sed '$i,\n"proxy": "http://api:3001"' package.json >> package.json.new
+#RUN sed '$i,\n"proxy": "http://api:3001",\n "homepage": "./docker/"\n' package.json >> package.json.new
 RUN cp package.json.new package.json
 
 # client/src dir will be mounted 
