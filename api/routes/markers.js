@@ -11,19 +11,19 @@ router.get('/', function(req, res, next) {
   var o = {}; // object
 
   var data = {
-    id: 'marker1',
-    lat: '45.3427596',
-    lon: '-75.7690188'
+    title: 'marker1',
+    lat: 45.3427596,
+    lng: -75.7690188
   };
   var data2 = {
-    id: 'marker2',
-    lat: '45.3426088',
-    lon: '-75.7677689'
+    title: 'marker2',
+    lat: 45.3426088,
+    lng: -75.7677689
   };
   var data3 = {
-    id: 'marker3',
-    lat: '45.3418019',
-    lon: '-75.7677314'
+    title: 'marker3',
+    lat: 45.3418019,
+    lng: -75.7677314
   };
 
   a.push(data);
