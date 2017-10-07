@@ -1,0 +1,36 @@
+FROM mysql
+MAINTAINER Michael Russell
+
+# a mysql container with a host mounted database
+# by mounting the data file on the host, the DB can persist over
+# restarts of the docker container
+
+# usage
+# 1. docker build -f mysqlDockerfile -t osx_hostdb_mysql .
+# 2. docker run  -p 3900:3306 --name mysql -v $PWD/mysql/datadir:/var/lib/mysql -d osx_hostdb_mysql 
+# 3. if you dont have mysql on your host
+#    brew install mysql
+# 4. first time. connect to container to create basic user in the database
+#    mysql -uroot -padmin123 -h $(docker-machine ip default) -P 3900
+#    mysql> CREATE USER 'dbuser'@'%' IDENTIFIED BY 'admin123';
+#    mysql> GRANT ALL PRIVILEGES ON *.* TO'dbuser'@'%' WITH GRANT OPTION;
+#    mysql> FLUSH PRIVILEGES;
+#    mysql> exit;
+# 5. optionally use phpMyAdmin to manage the database ('mysql' is the container name used above)
+#    docker run --name myadmin -d --link mysql:db -p 8080:80 phpmyadmin/phpmyadmin
+#    # open a browser and goto 192.168.99.100:8080 (login as dbuser/admin123)
+# 6. use phpMyAdmin to import the teleport.sql file (will create the DB for you)
+
+ENV MYSQL_ROOT_PASSWORD admin123 
+ENV MYSQL_PASSWORD admin123 
+ENV MYSQL_DATABASE mysql       
+
+# this need to stay the same for script to work
+ENV MYSQL_USER mysql
+
+COPY ./mac_hostdb_fix.sh /
+RUN chmod 755 /mac_hostdb_fix.sh
+
+ENTRYPOINT ["/mac_hostdb_fix.sh"] 
+
+EXPOSE 3306

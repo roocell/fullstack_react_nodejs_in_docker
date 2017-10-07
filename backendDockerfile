@@ -28,9 +28,12 @@ RUN npm install webpack
 #RUN npm install --save webpack-dev-middleware
 RUN npm install -g nodemon
 
+RUN npm install --save mysql
+
 # COPY in server root files
 COPY api/webpack.config.js /backend
 COPY api/app.js /backend
+RUN cp -f /backend/package.json /tmp/package.json.old
 COPY api/package.json /backend
 
 # install backend app

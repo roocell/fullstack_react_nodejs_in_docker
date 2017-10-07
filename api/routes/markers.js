@@ -1,42 +1,27 @@
 var express = require('express');
 var router = express.Router();
 
+// https://github.com/mysqljs/mysql
+var mysql = require('mysql');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	// Comment out this line:
-  //res.send('respond with a resource');
+  var connection = mysql.createConnection({
+    host     : 'mysql', // from the --link option in docker
+    user     : 'dbuser',
+    password : 'admin123',
+    database : 'teleport'
+  });
 
-  var key = 'markers';
-  var a = []; // use array to push into 
-  var o = {}; // object
+  connection.connect();
 
-  var data = {
-    title: 'marker1',
-    lat: 45.3427596,
-    lng: -75.7690188
-  };
-  var data2 = {
-    title: 'marker2',
-    lat: 45.3426088,
-    lng: -75.7677689
-  };
-  var data3 = {
-    title: 'marker3',
-    lat: 45.3418019,
-    lng: -75.7677314
-  };
+  connection.query('SELECT * FROM markers WHERE 1', function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
 
-  a.push(data);
-  a.push(data2);
-  a.push(data3);
-
-
-  res.json(a);
-  // the client end doesn't work with stringify
-  // which produces a bunch of quotes and escape sequences
-  //res.json(Object.assign({}, a));
+  connection.end();  
 
 });
 
 module.exports = router;
-var o = {} // empty Object
