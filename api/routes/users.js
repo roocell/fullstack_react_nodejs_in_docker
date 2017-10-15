@@ -62,16 +62,18 @@ router.post('/', async function(req, res) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.warn("mike");
+  var database = new Database();
+  var response = {status: "fail"};
 
-  // And insert something like this instead:
-  res.json([{
-  	id: 1,
-  	username: "pZGGGFp"
-  }, {
-  	id: 2,
-  	username: "D0loresH4ze"
-  }]);
+  var query = 'SELECT * FROM users WHERE 1';
+  database.query(query)  // need to await here so the return at the end of the func wait for all this to happen
+  .then( rows => {
+    res.json(rows);
+  })
+  .catch( err => {
+          // handle the error
+  } )
+  database.close();
 });
 
 module.exports = router;

@@ -41,12 +41,12 @@ RUN npm install
 
 # copy in webpack config
 COPY api/webpack.config.js webpack.config.js
-COPY api/backendInit.sh . 
-RUN chmod 777 /backend/backendInit.sh
+COPY api/start.sh . 
+RUN chmod 777 /backend/start.sh
 
 # backend/routes will be mounted with server dir
 # with the run command
 
 # start
 EXPOSE 3001
-CMD /backend/backendInit.sh
+CMD /backend/start.sh

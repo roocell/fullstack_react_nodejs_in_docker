@@ -1,20 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var db = require('./db');
-var mysql = require('mysql');
+const Database = require('./db');
+
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  var connection = mysql.createConnection(db.info());
-  connection.connect();
+  var database = new Database();
+  var response = {status: "fail"};
 
-  connection.query('SELECT * FROM markers WHERE 1', function (error, results, fields) {
-    if (error) throw error;
-    res.json(results);
-  });
-
-  connection.end();
-
+  var query = 'SELECT * FROM markers WHERE 1';
+  database.query(query)  // need to await here so the return at the end of the func wait for all this to happen
+  .then( rows => {
+    res.json(rows);
+  })
+  .catch( err => {
+          // handle the error
+  } )
+  database.close();
 });
 
 module.exports = router;

@@ -48,6 +48,6 @@ eval "$(docker-machine env default)"
 To debug server API (ie - if you're editing API code and want to see JS errors)
 ```
 docker run -it --name api -v $(PWD)/api/routes:/backend/routes --link mysql -p 3001:3001 roocell/backend bash
-./backendInit.sh
+./start.sh
 ```
 
