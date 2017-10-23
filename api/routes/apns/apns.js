@@ -3,32 +3,42 @@ let apn = require('apn')
 const TEAM_ID = "SUKAFQ5426";
 const KEY_ID = "V9C2C5DZ97";
 
-var options = {
-  token: {
-    key: "./AuthKey_V9C2C5DZ97.p8",
-    keyId: KEY_ID,
-    teamId: TEAM_ID
-  },
-};
+module.exports = class Apns {
+    constructor( ) {
+      var options = {
+        token: {
+          key: "/backend/routes/apns/AuthKey_V9C2C5DZ97.p8",
+          keyId: KEY_ID,
+          teamId: TEAM_ID
+        },
+      };
+      this.Provider = new apn.Provider(options);
+    }
+    // accepts object
+    // {
+    //   notiftoken: token,
+    //   message: message,
+    //   source_userid: userid,
+    // }
+    sendPushNotification (data) {
+      console.log(data.notiftoken);
+      return new Promise( ( resolve, reject ) => {
+        var note = new apn.Notification();
 
-var apnProvider = new apn.Provider(options);
+        note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+        note.badge = 3;
+        note.sound = "ping.aiff";
+        note.alert = data.message;
+        note.payload = {'messageFrom': data.source_userid};
+        note.topic = "com.thumbgenius.reactNativeApp"; // app bundle id
 
-// get device token from database
-// 73cc7743f6c20890c2aa2f4aa1f1d916e4c634266112a22b6aa6056e3c5cbfb3
-let deviceToken = "73cc7743f6c20890c2aa2f4aa1f1d916e4c634266112a22b6aa6056e3c5cbfb3"
+        this.Provider.send(note, data.notiftoken, (result) => {
+          // see documentation for an explanation of result
+          console.log(result);
+          this.Provider.shutdown();
+          resolve( result );
+        });
+      } );
+    }
 
-var note = new apn.Notification();
-
-note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-note.badge = 3;
-note.sound = "ping.aiff";
-note.alert = "\uD83D\uDCE7 \u2709 Yo! You have a new message";
-note.payload = {'messageFrom': 'Michael Russell'};
-note.topic = "com.thumbgenius.reactNativeApp"; // app bundle id
-
-apnProvider.send(note, deviceToken).then( (result) => {
-  // see documentation for an explanation of result
-  console.log(result);
-  apnProvider.shutdown();
-  process.exit();
-});
+}

@@ -8,10 +8,11 @@
     "//": [
       "seem to have to use legacy mode in docker but it's slower",
       ""
-      ],
+    ],
     "nodemonL": "nodemon -L ./bin/www"
   },
   "dependencies": {
+    "apn": "^2.1.5",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",

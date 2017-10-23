@@ -29,6 +29,7 @@ RUN npm install webpack
 RUN npm install -g nodemon
 
 RUN npm install --save mysql
+RUN npm install --save apn
 
 # COPY in server root files
 COPY api/webpack.config.js /backend
