@@ -12,7 +12,7 @@ fs.readdirSync('node_modules')
   });
 
 module.exports = {
-  entry: './app.js',
+  entry: './app/app.js',
   target: 'node',
   output: {
     path: path.join(__dirname, 'bin'),

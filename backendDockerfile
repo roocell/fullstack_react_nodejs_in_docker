@@ -33,7 +33,6 @@ RUN npm install --save apn
 
 # COPY in server root files
 COPY api/webpack.config.js /backend
-COPY api/app.js /backend
 RUN cp -f /backend/package.json /tmp/package.json.old
 COPY api/package.json /backend
 
